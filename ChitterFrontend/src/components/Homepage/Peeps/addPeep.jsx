@@ -1,62 +1,66 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { addPeepData } from '../../../../util/peepAPICall.js';
+import { useNavigate } from 'react-router-dom';
 
-const AddPeep = ({ user }) => {
-    const [peep, setPeep] = useState({
-        peepMessage: ''
+
+const AddPeep = ({ addPeep }) => {
+    const [peepDetails, setPeepDetails] = useState({
+        username: '',
+        message: '',
+        date: new Date().toLocaleDateString()
     });
+    const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setPeep({ ...peep, peepMessage: e.target.value });
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setPeepDetails(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = e => {
         e.preventDefault();
-        const newPeep = {
-            username: user.username,
-            peepMessage: peep.peepMessage,
-            date: dateCreated()
-        };
-
-        const response = await addPeepData(newPeep);
-        if (response && !response.error) {
-            setPeep({ peepMessage: '' });
-            alert('Peep added successfully!');
-        } else if (response && response.error.message) {
-            alert(`Error: ${response.error.message}`);
-        }
+        const newPeep = { ...peepDetails, date: new Date().toLocaleDateString(), username: peepDetails.username }
+        console.dir(newPeep);
+        addPeep(newPeep);
+        navigate("/post");
     };
 
-    const dateCreated = () => {
-        const date = new Date();
-        return `${date.toLocaleDateString()} @ ${date.toLocaleTimeString()}`;
-    };
 
     return (
         <div className="container">
-            {user ? (
-                <>
-                    <h2>What do you want to say? Peep it!</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="addPeep">Peep:</label>
-                            <input type="text" id="addPeep" name="peepText" className="form-control" value={peep.peepMessage} onChange={handleChange} placeholder="Type here..." />
+            <h1>Post your peep</h1>
+            <form onSubmit={e => handleSubmit(e)}>
+                <div className="peep-input-wrapper">
+                    <label className="col-sm-2 col-form-label" htmlFor="username">
+                        Username
+                        <div className="peep-input-card">
+                            <input type="text" className="form-control" name="username" id="username" placeholder="Username" value={peepDetails.username} onChange={e => handleChange(e)} />
                         </div>
-                        <button type="submit" className="btn btn-primary">Peep it!</button>
-                    </form>
-                </>
-            ) : (
-                <p>Please log in to post a peep.</p>
-            )}
+                    </label>
+                </div>
+                <div className="peep-input-wrapper">
+                    <label className="col-sm-2 col-form-label" htmlFor="message">
+                        Peep
+                        <div className="peep-input-card">
+                            <input type="text" className="form-control" name="message" id="message" placeholder="Type here..." value={peepDetails.message} onChange={e => handleChange(e)} />
+                        </div>
+                    </label>
+                </div>
+                <div className="peep-input-wrapper">
+                    <label className="col-sm-2 col-form-label" htmlFor="date">
+                        Date
+                        <div className="peep-input-card">
+                            <input type="text" className="form-control" name="date" id="date" value={peepDetails.date} onChange={e => handleChange(e)} />
+                        </div>
+                    </label>
+                </div>
+                <input type="submit" className="btn btn-primary" value="Add Peep" />
+            </form>
         </div>
     );
-};
 
-AddPeep.propTypes = {
-    user: PropTypes.shape({
-        username: PropTypes.string.isRequired
-    }).isRequired
 };
+AddPeep.propTypes = {
+    addPeep: PropTypes.func.isRequired
+}
 
 export default AddPeep;

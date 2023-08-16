@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const getPeepsData = async () => {
     try {
-        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT_TEST}/peeps`);
+        const response = await axios.get(`http://localhost:4000/peeps`);
         return response.data;
     } catch (error) {
         console.error('Error fetching peeps data', error);
@@ -12,7 +12,7 @@ export const getPeepsData = async () => {
 
 export const addPeepData = async (newPeep) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT_TEST}/peeps`, newPeep);
+        const response = await axios.post(`http://localhost:4000/peeps`, newPeep);
         return response.data;
     } catch (error) {
         return {

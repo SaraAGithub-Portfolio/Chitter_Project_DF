@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const addUser = async (newUser) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}auth/signup`, newUser);
+        const response = await axios.post(`http://localhost:4000/auth/signup`, newUser);
         return response.data;
     } catch (error) {
         return {
@@ -17,7 +17,7 @@ export const addUser = async (newUser) => {
 
 export const userLogin = async (loginDetails) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}auth/login`, loginDetails);
+        const response = await axios.post(`http://localhost:4000/auth/login`, loginDetails);
         return response.data;
     } catch (error) {
         return {
@@ -30,13 +30,13 @@ export const userLogin = async (loginDetails) => {
     }
 }
 
-export const userLogOut = async (loginDetails) => {
+export const userLogout = async (loginDetails) => {
     try {
-        const response = await axios.post(`${import.meta.env.VITE_API_ENDPOINT}auth/logout`, loginDetails);
+        const response = await axios.post(`http://localhost:4000/auth/logout`, loginDetails);
         return response.data;
     } catch (error) {
         return {
-            status: error.response?.status,
+            status: 500,
             error: {
                 type: 'logout',
                 message: 'Error logging out'
