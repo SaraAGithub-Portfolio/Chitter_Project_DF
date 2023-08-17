@@ -30,7 +30,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// Use the combined routes
 app.use('/auth', authRoute);
 app.use('/peeps', peepsRoute);
 // app.get('/', (req, res) => {

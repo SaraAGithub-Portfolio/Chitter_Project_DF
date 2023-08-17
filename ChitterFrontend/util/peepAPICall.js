@@ -9,19 +9,20 @@ export const getPeepsData = async () => {
         return [];
     }
 }
-
-export const addPeepData = async (newPeep) => {
+export const addPeepData = async peep => {
     try {
-        const response = await axios.post(`http://localhost:4000/peeps`, newPeep);
-        return response.data;
+        const response = await axios.post(`http://localhost:4000/post`, peep);
+        return { peep: response.data, status: response.status };
     } catch (error) {
         return {
-            status: error.response?.status,
+            status: error.response?.status ?? error.status,
             error: {
                 type: 'post',
-                message: 'Error posting new peep'
+                message: error.response?.message ?? error.message
             }
         };
     }
 }
+
+
 

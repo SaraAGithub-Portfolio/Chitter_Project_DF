@@ -18,11 +18,16 @@ const AddPeep = ({ addPeep }) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        const newPeep = { ...peepDetails, date: new Date().toLocaleDateString(), username: peepDetails.username }
+        const newPeep = {
+            peepUser: peepDetails.username,
+            peepDescription: peepDetails.peepMessage,
+            date: new Date().toLocaleDateString()
+        };
         console.dir(newPeep);
         addPeep(newPeep);
         navigate("/post");
     };
+
 
 
     return (
@@ -33,10 +38,12 @@ const AddPeep = ({ addPeep }) => {
                     <label className="col-sm-2 col-form-label" htmlFor="username">
                         Username
                         <div className="peep-input-card">
-                            <input type="text" className="form-control" name="username" id="username" placeholder="Username" value={peepDetails.username} onChange={e => handleChange(e)} />
+                            <input type="text" className="form-control" name="username" id="username" placeholder="Enter Username..." value={peepDetails.username} onChange={e => handleChange(e)} />
                         </div>
                     </label>
                 </div>
+
+
                 <div className="peep-input-wrapper">
                     <label className="col-sm-2 col-form-label" htmlFor="message">
                         Peep

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { describe, test, expect } from 'vitest';
-import { getPeepsData, addPeepData } from './peepAPICall.js';
+import { getPeepsData, addPeepData } from '../util/peepAPICall.js';
 import mockData from '../mockPeepData.json';
 import { vi } from 'vitest';
 

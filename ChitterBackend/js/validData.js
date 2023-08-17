@@ -1,1 +1,0 @@
-export const validTitles = ['Ms', 'Miss', 'Mrs', 'Mr', 'Dr', 'Mx'];

@@ -9,7 +9,14 @@ export const addPeepService = async peep => {
         throw new Error('Failed to add peep');
     }
 }
-
+export const getPeepsService = async () => {
+    try {
+        return await Peep.find().sort({ dateCreated: -1 });
+    } catch (error) {
+        console.error('Error fetching peeps:', error);
+        throw new Error('Failed to fetch peeps');
+    }
+}
 export const getPeepById = async id => {
     try {
         return await Peep.findById(id);

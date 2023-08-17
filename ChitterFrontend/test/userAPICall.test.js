@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { describe, test, expect } from 'vitest';
-import { addUser, userLogin, userLogout } from './userAPICall.js';
+import { addUser, userLogin, userLogout } from '../util/userAPICall.js';
 import { vi } from 'vitest';
 
 vi.mock('axios');

@@ -5,6 +5,13 @@ export const addUser = async (newUser) => {
         const response = await axios.post(`http://localhost:4000/auth/signup`, newUser);
         return response.data;
     } catch (error) {
+
+        if (error.response?.status === 422) {
+            return {
+                status: error.response?.status,
+                errors: error.response?.data?.errors || {}
+            };
+        }
         return {
             status: error.response?.status,
             error: {
@@ -15,32 +22,3 @@ export const addUser = async (newUser) => {
     }
 }
 
-export const userLogin = async (loginDetails) => {
-    try {
-        const response = await axios.post(`http://localhost:4000/auth/login`, loginDetails);
-        return response.data;
-    } catch (error) {
-        return {
-            status: error.response?.status,
-            error: {
-                type: 'login',
-                message: 'Error logging in'
-            }
-        };
-    }
-}
-
-export const userLogout = async (loginDetails) => {
-    try {
-        const response = await axios.post(`http://localhost:4000/auth/logout`, loginDetails);
-        return response.data;
-    } catch (error) {
-        return {
-            status: 500,
-            error: {
-                type: 'logout',
-                message: 'Error logging out'
-            }
-        };
-    }
-}

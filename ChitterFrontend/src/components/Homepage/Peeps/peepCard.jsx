@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 
 const PeepCard = ({ peep }) => {
-    const { peepUser, peepMessage, peepDateCreated } = peep;
+    const { username, message, dateCreated } = peep;
 
     return (
         <>
             <div className='peepCard'>
-                <div className='card-header'>{peepUser}</div>
+                <div className='card-header'>{username}</div>
                 <div className='card-body'>
-                    <p className='text'>{peepMessage}</p>
+                    <p className='text'>{message}</p>
                     <footer className='text-footer'>
-                        <p>Added on {new Date(peepDateCreated).toLocaleString('en-GB')}</p>
+                        <p>Added on {new Date(dateCreated).toLocaleString('en-GB')}</p>
                     </footer>
                 </div>
             </div>
@@ -20,9 +20,9 @@ const PeepCard = ({ peep }) => {
 
 PeepCard.propTypes = {
     peep: PropTypes.shape({
-        peepUser: PropTypes.string,
-        peepMessage: PropTypes.string,
-        peepDateCreated: PropTypes.string
+        username: PropTypes.string,
+        message: PropTypes.string,
+        dateCreated: PropTypes.string
     }).isRequired
 };
 

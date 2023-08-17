@@ -1,19 +1,17 @@
 Chitter Challenge
 =================
 
-* Feel free to use Google, your notes, books, etc. but work on your own
-* If you refer to the solution of another coach or trainee, please put a link to that in your README
-* If you have a partial solution, **still check in a partial solution**
-* You must submit your work by 9:30am Monday morning
 
-Challenge:
+Project Structure:
 -------
 
-As usual please start by forking this repo.
 
-We are going to write a small twitter clone that will allow users to post messages to a public wall.
+Approach:
+-------
 
-Good luck and let the chitter begin!
+Single responsiblity , modular, clean code
+Difference between validator file and controller logic
+
 
 Features:
 -------
@@ -54,14 +52,11 @@ Additional requirements:
 * Peeps (posts to chitter) have the name of the trainee and their user handle.
 * Your README should indicate the technologies used, and give instructions on how to install and run the tests.
 
-### Extended Acceptance Criteria
+### How to Test and View Finished Project
 
 ```
-As a trainee
-So that I can stay constantly tapped in to the shouty box of Chitter
-I want to receive an email if I am tagged in a Peep
+Backend: Open an integrated terminal in the test folder in the ChitterBackend Folder. Make sure you're in test folder. Type: NODE_ENV=test npm test. 
 
-As a trainee
-In order to start a conversation as a DFA trainee Software Engineer
-I want to reply to a peep from another trainee.
 ```
+## References:
+I used Canva.com for the Chitter logo image. For my project, I referenced:https://www.freecodecamp.org/news/how-to-use-localstorage-with-react-hooks-to-set-and-get-items/ on how to use localStorage with React. Usage of Postman to send data to my MongoDB. I used MDN web docs to research methods.

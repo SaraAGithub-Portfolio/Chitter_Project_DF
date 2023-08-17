@@ -37,12 +37,11 @@ describe(' Peep Database tests', () => {
         });
 
         describe('Post request Peep Tests', () => {
-            it('should return status 201 when people successfully added ', async () => {
+            it('should return status 201 when peep successfully added ', async () => {
                 let mockPeep = {
-                    "peepDescription": "Stranger Things",
-                    "peepMessage": "Friends don't lie",
-                    "peepUser": "Eleven",
-                    "peepDateCreated": "2023-08-08T17:16:23.832+00:00"
+                    "message": "Friends don't lie",
+                    "username": "Eleven",
+                    "dateCreated": "2023-08-08T17:16:23.832+00:00"
                 }
                 const res = await testServer
                     .post('/peeps')
@@ -52,10 +51,9 @@ describe(' Peep Database tests', () => {
             });
             it('should return a status of 400 if message is blank', async () => {
                 let mockPeep = {
-                    "peepDescription": "Stranger Things",
-                    "peepMessage": "",
-                    "peepUser": "Eleven",
-                    "peepDateCreated": "2023-08-08T17:16:23.832+00:00"
+                    "message": "",
+                    "username": "Eleven",
+                    "dateCreated": "2023-08-08T17:16:23.832+00:00"
                 }
                 const res = await testServer
                     .post('/peeps')
@@ -67,15 +65,31 @@ describe(' Peep Database tests', () => {
                 const longMessage = "Friends don't lie".repeat(18);
 
                 let mockPeep = {
-                    "peepDescription": "Stranger Things",
-                    "peepMessage": longMessage,
-                    "peepUser": "Eleven",
-                    "peepDateCreated": "2023-08-08T17:16:23.832+00:00"
+                    "message": longMessage,
+                    "username": "Eleven",
+                    "dateCreated": "2023-08-08T17:16:23.832+00:00"
                 };
                 const res = await testServer
                     .post('/peeps')
                     .send(mockPeep);
                 expect(res).to.have.status(400);
+            });
+            it('should return peeps in reverse chronological order', async () => {
+                const res = await testServer
+                    .get('/peeps');
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('array');
+                console.log(res.body.map(peep => peep.dateCreated));
+
+                const isReverseChronological = res.body.every((peep, index, peeps) => {
+                    if (index === 0) return true; // always true for the first peep
+                    const currentPeepDate = new Date(peep.dateCreated);
+                    const prevPeepDate = new Date(peeps[index - 1].dateCreated);
+                    return currentPeepDate < prevPeepDate;
+                });
+
+                expect(isReverseChronological).to.be.true;
+
             });
         })
     });

@@ -2,18 +2,20 @@ import PeepCard from "./PeepCard.jsx";
 import PropTypes from 'prop-types';
 
 const PeepList = ({ peep }) => {
-    const latestPeeps = Array.from(peep).reverse();
 
-    const peepInfo = latestPeeps.map(peepData => (
-        <div key={peepData.peepDateCreated} className="card mb-4">
+
+    const peepInfo = peep.map(peepData => (
+        <div key={peepData._id} className="card mb-4">
             <div className="card-body">
                 <PeepCard peep={peepData} />
             </div>
         </div>
     ));
+
     return (
         <div className="peep-container">
-            {latestPeeps.length > 0 ? peepInfo : <div>Peeps are loading...</div>}
+            <h2>Today&apos;s Peeps</h2>
+            {peep.length > 0 ? peepInfo : <div>Peeps are loading...</div>}
         </div>
     );
 };
