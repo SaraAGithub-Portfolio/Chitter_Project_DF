@@ -11,7 +11,7 @@ export const getPeepsData = async () => {
 }
 export const addPeepData = async peep => {
     try {
-        const response = await axios.post(`http://localhost:4000/post`, peep);
+        const response = await axios.post(`http://localhost:4000/peeps`, peep);
         return { peep: response.data, status: response.status };
     } catch (error) {
         return {

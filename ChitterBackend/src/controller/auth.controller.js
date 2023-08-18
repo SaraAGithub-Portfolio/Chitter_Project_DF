@@ -1,36 +1,30 @@
-// controller/auth.controller.js
+import { validationResult } from 'express-validator';
+import { signupService, loginUserService } from '../services/auth.service.js';
 
-import User from '../models/user.model.js';
-
-export const createUser = (req, res) => {
-    const { email } = req.body;
-
-    User.findOne({ email }, (err, user) => {
-        if (user) {
-            res.status(400).send({ message: 'User already exists' });
-        } else {
-            const newUser = new User(req.body);
-            newUser.save(err => {
-                if (err) {
-                    res.status(500).send(err);
-                } else {
-                    res.send({ message: 'Registration successful' });
-                }
-            });
-        }
-    });
+export const createUser = async (req, res) => {
+    const result = validationResult(req)
+    if (result.errors.length !== 0) {  // <-- Fix here
+        return res.status(422).send('Signup unsuccessful');
+    }
+    try {
+        const newUser = await signupService(req.body);
+        res.status(201).json({ newUser });
+    } catch (error) {
+        console.error(error.message);
+        res.status(400).send('Signup unsuccessful');
+    }
 }
 
-export const loginUser = (req, res) => {
-    const { email, password } = req.body;
-
-    User.findOne({ email }, (err, user) => {
-        if (user && password === user.password) {
-            res.send({ message: 'Login success', user });
-        } else {
-            res.status(404).send({ message: 'Details not found' });
-        }
-    });
+export const loginUser = async (req, res) => {
+    const result = validationResult(req)
+    if (result.errors.length !== 0) {
+        return res.status(422).send('Log in unsuccessful');
+    }
+    try {
+        const user = await loginUserService(req.body);
+        res.status(200).json({ user });
+    } catch (error) {
+        console.error(error.message);
+        res.status(400).send('Log in unsuccessful');
+    }
 }
-
-

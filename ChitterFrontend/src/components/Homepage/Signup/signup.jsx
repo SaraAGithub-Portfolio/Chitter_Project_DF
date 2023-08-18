@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 const Signup = ({ newUser }) => {
 
     const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [formErrors, setFormErrors] = useState({});
@@ -18,7 +19,10 @@ const Signup = ({ newUser }) => {
             "username": username,
             "password": password,
             "email": email,
-            "name": name,
+            "name": {
+                "firstName": firstName,
+                "lastName": lastName
+            }
         };
 
         const response = await newUser(peepUserDetails);
@@ -29,7 +33,8 @@ const Signup = ({ newUser }) => {
             alert(response);
             if (response === "Signup successful!") {
                 setEmail('');
-                setName('');
+                setFirstName('');
+                setLastName('');
                 setUsername('');
                 setPassword('');
                 navigate("/");
@@ -43,14 +48,25 @@ const Signup = ({ newUser }) => {
                 <form onSubmit={handleSignup}>
                     <div className="text-start row">
                         <div className="text-start col-4">
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="firstName">Name</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="name"
-                                placeholder="first & last name"
-                                value={name}
-                                onChange={event => setName(event.target.value)}
+                                placeholder="first name"
+                                value={firstName}
+                                onChange={event => setFirstName(event.target.value)}
+                            />
+                        </div>
+                        <div className="text-start col-4">
+                            <label htmlFor="lastName">Last Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="lastName"
+                                placeholder="last name"
+                                value={lastName}
+                                onChange={event => setLastName(event.target.value)}
                             />
                         </div>
 
@@ -77,7 +93,7 @@ const Signup = ({ newUser }) => {
                                 value={username}
                                 onChange={event => setUsername(event.target.value)}
                             />
-                            {formErrors.email && <span className="error-text">{formErrors.email}</span>}
+                            {formErrors.email && <span className="error-text">{formErrors.username}</span>}
                         </div>
 
                         <div className="text-start col-4">
@@ -90,7 +106,7 @@ const Signup = ({ newUser }) => {
                                 value={password}
                                 onChange={event => setPassword(event.target.value)}
                             />
-                            {formErrors.email && <span className="error-text">{formErrors.email}</span>}
+                            {formErrors.email && <span className="error-text">{formErrors.password}</span>}
                         </div>
                     </div>
                     <br />

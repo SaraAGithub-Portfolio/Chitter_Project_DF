@@ -7,7 +7,7 @@ import Login from './components/Homepage/Login/login';
 import Signup from './components/Homepage/Signup/signup';
 import { getPeepsData, addPeepData } from '../util/peepAPICall.js';
 import { addUser } from '../util/userAPICall.js'
-import { checkLogin } from '../util/authenticationHelper';
+import { checkLogin } from '../util/authenticationHelper.js';
 
 
 function App() {
