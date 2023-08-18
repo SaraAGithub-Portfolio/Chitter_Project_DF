@@ -17,11 +17,4 @@ export const getPeepsService = async () => {
         throw new Error('Failed to fetch peeps');
     }
 }
-// export const getPeepById = async id => {
-//     try {
-//         return await Peep.findById(id);
-//     } catch (error) {
-//         console.error('Error fetching peep by ID:', error);
-//         throw new Error('Failed to fetch peep by ID');
-//     }
-// }
+

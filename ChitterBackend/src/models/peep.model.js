@@ -7,7 +7,7 @@ const peepSchema = new mongoose.Schema({
         required: true
     },
     message: { type: String, required: true, minLength: 1, maxLength: 280 },
-    username: { type: String, required: true },
+    username: { type: String, required: true }
 });
 
 const Peep = mongoose.model('Peep', peepSchema);

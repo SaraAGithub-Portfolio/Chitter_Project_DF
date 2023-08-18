@@ -1,25 +1,34 @@
 {
     "peeps": [
         {
-            "id": "64d27867132dbbdfe8ecb00a",
-            "peepDescription": "Stranger Things",
-            "peepMessage": "Friends don't lie",
-            "peepUser": "Eleven",
-            "peepDateCreated": "2023-08-08T17:16:23.832+00:00"
+            "id": "64d27867132dbbdfe8ecb001",
+            "message": "Friends don't lie",
+            "username": "ElevenisCool",
+            "dateCreated": "2023-08-08T17:16:23.832+00:00",
+            "name": {
+                "firstName": "Eleven",
+                "lastName": "Hopper"
+            }
         },
         {
-            "id": "64d27867132dbbdfe8ecb00b",
-            "peepDescription": "Stranger Things",
-            "peepMessage": "Why are you keeping this curiosity door locked?",
-            "peepUser": "Dustin",
-            "peepDateCreated": "2023-08-08T17:16:23.832+00:00"
+            "id": "64d27867132dbbdfe8ecb002",
+            "message": "Why are you keeping this curiosity door locked?",
+            "username": "Dustin1",
+            "dateCreated": "2023-08-08T17:16:23.832+00:00",
+            "name": {
+                "firstName": "Dustin",
+                "lastName": "Henderson"
+            }
         },
         {
-            "id": "64d27867132dbbdfe8ecb00c",
-            "peepDescription": "Stranger Things",
-            "peepMessage": "Ah!!!",
-            "peepUser": "Mike",
-            "peepDateCreated": "2023-08-08T17:16:23.832+00:00"
+            "id": "64d27867132dbbdfe8ecb003",
+            "message": "Ah!!!",
+            "username": "MikeheartofGroup",
+            "dateCreated": "2023-08-08T17:16:23.832+00:00",
+            "name": {
+                "firstName": "Mike",
+                "lastName": "Wheeler"
+            }
         }
     ],
     "users": [

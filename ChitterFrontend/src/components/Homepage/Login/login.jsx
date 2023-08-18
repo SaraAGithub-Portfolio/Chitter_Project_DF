@@ -1,90 +1,67 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const emailRegEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+const Login = ({ handleLogin, setUser }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-const Login = ({ handleLogin }) => {
-    const [login, setLogin] = useState({
-        email: {
-            value: '',
-            dirty: false,
-            validity: false
-        },
-        password: {
-            value: '',
-            dirty: false
-        }
-    });
+    const navigate = useNavigate();
 
-    const handleChange = e => {
-        const { name, value } = e.target;
-        setLogin({ ...login, [name]: { ...login[name], value, dirty: true } });
-    };
-
-    const makeDirty = e => {
-        const { name } = e.target;
-        setLogin({ ...login, [name]: { ...login[name], dirty: true } });
-    };
-
-    const validate = () => {
-        const validity = emailRegEx.test(login.email.value);
-        setLogin({
-            ...login,
-            email: {
-                ...login.email,
-                dirty: true,
-                validity
-            }
-        });
-    };
-
-    const loginSubmitHandler = e => {
+    const login = async (e) => {
         e.preventDefault();
-        console.log("handleLogin type:", typeof handleLogin);
-        handleLogin({ email: login.email.value, password: login.password.value });
-    };
+
+        const user = { email, password };
+
+        const response = await handleLogin(user);
+
+        if (response === "Login successful") {
+            alert("Login successful!");
+            navigate("/")
+        } else {
+            alert("Login failed!")
+        }
+
+        setEmail('');
+        setPassword('');
+        setUser(user);
+        navigate('/');
+    }
 
     return (
-        <form aria-label="form" onSubmit={loginSubmitHandler} noValidate>
-            <div className="form-group">
-                <label htmlFor="email" className="form-label">Email:</label>
+        <>
+            <h3 className="login-title">Log in to your account</h3>
+            <form onSubmit={login}>
                 <input
-                    className="form-control"
                     type="email"
-                    name="email"
-                    id="email"
-                    placeholder="you@memail.com"
-                    value={login.email.value}
-                    onChange={handleChange}
-                    onBlur={validate} />
-                {login.email.dirty && !login.email.validity && (
-                    <div className="text-danger">
-                        Please enter a valid email address
-                    </div>
-                )}
-            </div>
-            <div className="form-group">
-                <label htmlFor="password" className="form-label">Password:</label>
+                    id="sign-in-email"
+                    className="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email"
+                />
+                <br />
                 <input
-                    className="form-control"
                     type="password"
-                    name="password"
-                    id="password"
-                    value={login.password.value}
-                    onChange={handleChange}
-                    onBlur={makeDirty} />
-                {login.password.dirty && !login.password.value && (
-                    <div className="text-danger">
-                        Please enter your password
-                    </div>
-                )}
-            </div>
-            <br />
-            <input type="submit" className="btn btn-primary" disabled={!(login.email.validity && login.password.value)} value="Log In" />
-        </form>
+                    id="sign-in-password"
+                    className="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Your password"
+                />
+                <br />
+                <input type="submit" value="Login" />
+            </form>
+            <Link to="/auth/signup">
+                You don&apos;t have an account? Sign up now!
+            </Link>
+        </>
     );
-};
+}
+
 Login.propTypes = {
+    setUser: PropTypes.func.isRequired,
     handleLogin: PropTypes.func.isRequired
 }
+
 export default Login;

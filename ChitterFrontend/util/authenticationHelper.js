@@ -1,9 +1,30 @@
 import axios from 'axios';
 
 export const checkLogin = async ({ email, password }) => {
-    const loginReturn = await axios.post(`http://localhost:4000/login`, { email, password });
+    try {
 
-    const loginStatus = loginReturn.status === 200;
+        const response = await axios.post(`http://localhost:4000/auth/login`, { email, password });
 
-    return loginStatus;
+
+        console.log("Response from login API:", response.data);
+
+
+        if (response.data.message) {
+            alert(response.data.message);
+        }
+
+        return response.data;
+
+    } catch (error) {
+        console.error("Error during login:", error.response ? error.response.data : error.message);
+
+        const errorMessage = error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "Login failed!";
+
+        return { error: errorMessage };
+    }
 }
+
+
+

@@ -7,14 +7,18 @@ export const signupService = async (newUser) => {
         console.log(user)
         return await user.save();
     } catch (error) {
-        throw Error
+        throw error
     }
 }
 
-export const loginUserService = async ({ username, password }) => {
+export const loginUserService = async ({ email, password }) => {
+    console.log('Attempting login for', email, password);
     try {
-        return await User.findOne({ username, password });
+        const user = await User.findOne({ email, password });
+        console.log('User found:', user);
+        return user;
     } catch (error) {
-        throw Error
+        console.error('Error during login:', error);
+        throw error
     }
 }

@@ -1,0 +1,13 @@
+.navbar {
+    background-color: #14171A;
+    color: black;
+}
+
+.navbar-nav .nav-link {
+    color: black;
+    margin-right: 10px;
+}
+
+.twitter-blue {
+    background-color: #1DA1F2;
+}

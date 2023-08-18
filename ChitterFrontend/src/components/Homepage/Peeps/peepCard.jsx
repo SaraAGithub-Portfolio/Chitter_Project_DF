@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 
 const PeepCard = ({ peep }) => {
-    const { username, message, dateCreated } = peep;
+    const { name, username, message, dateCreated } = peep;
+
 
     return (
         <>
             <div className='peepCard'>
-                <div className='card-header'>{username}</div>
+                <div className="card-header bg-primary text-white">
+                    {name} @ {username}
+                </div>
                 <div className='card-body'>
                     <p className='text'>{message}</p>
                     <footer className='text-footer'>
@@ -20,6 +23,7 @@ const PeepCard = ({ peep }) => {
 
 PeepCard.propTypes = {
     peep: PropTypes.shape({
+        name: PropTypes.string,
         username: PropTypes.string,
         message: PropTypes.string,
         dateCreated: PropTypes.string

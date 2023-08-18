@@ -59,4 +59,4 @@ Backend: Open an integrated terminal in the test folder in the ChitterBackend Fo
 
 ```
 ## References:
-I used Canva.com for the Chitter logo image. For my project, I referenced:https://www.freecodecamp.org/news/how-to-use-localstorage-with-react-hooks-to-set-and-get-items/ on how to use localStorage with React. Usage of Postman to send data to my MongoDB. I used MDN web docs to research methods.
+I used Canva.com for the Chitter logo image. Usage of Postman to send data to my MongoDB. 

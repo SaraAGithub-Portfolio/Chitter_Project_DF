@@ -16,13 +16,14 @@ export const createUser = async (req, res) => {
 }
 
 export const loginUser = async (req, res) => {
+    console.log('Login endpoint hit');
     const result = validationResult(req)
     if (result.errors.length !== 0) {
         return res.status(422).send('Log in unsuccessful');
     }
     try {
         const user = await loginUserService(req.body);
-        res.status(200).json({ user });
+        res.status(200).json({ message: "Log in successful", user });
     } catch (error) {
         console.error(error.message);
         res.status(400).send('Log in unsuccessful');

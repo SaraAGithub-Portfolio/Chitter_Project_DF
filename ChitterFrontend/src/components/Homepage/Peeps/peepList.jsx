@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 const PeepList = ({ peep }) => {
 
 
-    const peepInfo = peep.map(peepData => (
-        <div key={peepData._id} className="card mb-4">
-            <div className="card-body">
-                <PeepCard peep={peepData} />
+    const peepInfo = peep.map(peepData => {
+        return (
+            <div key={peepData._id} className="card mb-4">
+                <div className="card-body">
+                    <PeepCard peep={peepData} />
+                </div>
             </div>
-        </div>
-    ));
+        );
+    });
+
 
     return (
         <div className="peep-container">

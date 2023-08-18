@@ -1,9 +1,11 @@
+import './Styles/AddPeep.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 
-const AddPeep = ({ addPeep }) => {
+const AddPeep = ({ addPeep, user }) => {
+
     const [peepDetails, setPeepDetails] = useState({
         username: '',
         message: '',
@@ -16,34 +18,36 @@ const AddPeep = ({ addPeep }) => {
         setPeepDetails(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!user) {
+            alert("You need to log in before peeping!");
+            navigate("/")
+            return;
+        }
+        console.log("User prop in AddPeep:", user);
+
         const newPeep = {
-            peepUser: peepDetails.username,
-            peepDescription: peepDetails.peepMessage,
+            username: user.username,
+            message: peepDetails.message,
             date: new Date().toLocaleDateString()
         };
+
         console.dir(newPeep);
-        addPeep(newPeep);
-        navigate("/post");
+
+        try {
+            await addPeep(newPeep);
+            setPeepDetails(prev => ({ ...prev, message: '' }));
+            navigate("/");
+        } catch (err) {
+            console.error("Error posting peep:", err);
+        }
     };
-
-
 
     return (
         <div className="container">
             <h1>Post your peep</h1>
             <form onSubmit={e => handleSubmit(e)}>
-                <div className="peep-input-wrapper">
-                    <label className="col-sm-2 col-form-label" htmlFor="username">
-                        Username
-                        <div className="peep-input-card">
-                            <input type="text" className="form-control" name="username" id="username" placeholder="Enter Username..." value={peepDetails.username} onChange={e => handleChange(e)} />
-                        </div>
-                    </label>
-                </div>
-
-
                 <div className="peep-input-wrapper">
                     <label className="col-sm-2 col-form-label" htmlFor="message">
                         Peep
@@ -67,7 +71,8 @@ const AddPeep = ({ addPeep }) => {
 
 };
 AddPeep.propTypes = {
-    addPeep: PropTypes.func.isRequired
+    addPeep: PropTypes.func.isRequired,
+    user: PropTypes.object
 }
 
 export default AddPeep;
