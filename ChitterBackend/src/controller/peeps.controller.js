@@ -20,10 +20,12 @@ export const addPeep = async (req, res) => {
 export const getPeeps = async (req, res) => {
     try {
         const peeps = await getPeepsService();
+        peeps.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
         res.json(peeps)
+
     } catch (error) {
         res.status(404).send('Not found');
     }
 }
-//
+
 

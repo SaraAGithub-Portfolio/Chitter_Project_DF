@@ -1,22 +1,26 @@
 import User from "../models/user.model.js";
 
-const checkDuplicateInfo = async (req, res, next) => {
+export const checkDuplicateInfo = async (req, res, next) => {
     try {
-        const username = await User.findOne({ username: req.body.username });
+        const username = await User.findOne({ username: req.body.username })
         if (username) {
-            return res.status(400).send({ message: 'Username already in use' });
+            res.status(422).send({ message: ' Username is already in use!' });
+            return;
         }
-
-        const email = await User.findOne({ email: req.body.email });
-        if (email) {
-            return res.status(400).send({ message: 'Email already in use' });
-        }
-
-        next();
-
-    } catch (error) {
-        return res.status(500).send({ message: error.message });
+    } catch (e) {
+        res.status(500).send({ message: e });
+        return;
     }
-}
+    try {
+        const email = await User.findOne({ email: req.body.email })
+        if (email) {
+            res.status(422).send({ message: 'Email already in use!' });
+            return;
+        }
+    } catch (e) {
+        res.status(500).send({ message: e });
+        return;
+    }
+    next();
 
-export default checkDuplicateInfo;
+};

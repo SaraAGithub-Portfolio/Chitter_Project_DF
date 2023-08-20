@@ -1,42 +1,31 @@
 const testUsers = {
     "users": [
         {
-            "name": {
-                "firstName": "Eleven",
-                "lastName": "Hopper"
-            },
+            "name": "Eleven Hopper",
             "username": "ElevenisCool",
             "email": "elevenstrangerthings@email.com",
-            "password": "Ihavepsychicpowers"
+            "password": "$2b$08$fEHZuKn6W/uXdRc5ETdBGe1n15MFtTyrQz97WNyJ6qqdOR4yn2jga"
         },
         {
-            "name": {
-                "firstName": "Dustin",
-                "lastName": "Henderson"
-            },
+            "name": "Dustin Henderson",
             "username": "Dustin1",
             "email": "dustinstrangerthings@email.com",
-            "password": "Iamthesmartone"
+            "password": "$2b$08$fEHZuKn6W/uXdRc5ETdBGe1n15MFtTyrQz97WNyJ6qqdOR4yn2jga"
         },
         {
-            "name": {
-                "firstName": "Mike",
-                "lastName": "Wheeler"
-            },
+            "name": "Mike Wheeler",
             "username": "MikeheartofGroup",
             "email": "mikestrangerthings@email.com",
-            "password": "theheartofthegroup"
+            "password": "$2b$08$fEHZuKn6W/uXdRc5ETdBGe1n15MFtTyrQz97WNyJ6qqdOR4yn2jga"
         },
         {
-            "name": {
-                "firstName": "Lucas",
-                "lastName": "Sinclair"
-            },
+            "name": "Lucas Sinclair",
             "username": "LucasisBrave",
             "email": "lucasstrangerthings@email.com",
-            "password": "thebraveone"
+            "password": "$2b$08$fEHZuKn6W/uXdRc5ETdBGe1n15MFtTyrQz97WNyJ6qqdOR4yn2jga"
         }
     ]
 }
+
 
 export default testUsers;
