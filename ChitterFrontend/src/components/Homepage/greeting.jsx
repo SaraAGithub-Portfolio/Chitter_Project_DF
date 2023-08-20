@@ -2,7 +2,7 @@
 const Greeting = () => {
     return (
         <>
-            <div className="greeting-container">
+            <div className="float-start text-primary">
                 <h2>Happy to see you!</h2>
             </div>
         </>

@@ -1,32 +1,32 @@
 import PropTypes from 'prop-types';
 
-const PeepCard = ({ peep }) => {
-    const { name, username, message, dateCreated } = peep;
+const PeepCard = props => {
 
+    const { data } = props;
+
+    const { name, username, message, timestamp } = data
 
     return (
-        <>
-            <div className='peepCard'>
-                <div className="card-header bg-primary text-white">
-                    {name} @ {username}
-                </div>
-                <div className='card-body'>
-                    <p className='text'>{message}</p>
-                    <footer className='text-footer'>
-                        <p>Added on {new Date(dateCreated).toLocaleString('en-GB')}</p>
-                    </footer>
-                </div>
+        <div className="card w-75 border-primary bg-light mb-3 container">
+            <div className="card-header bg-primary text-white">
+                {name} @ {username}
             </div>
-        </>
-    );
-};
+            <div className="card-body  ">
+                <blockquote className="blockquote mb-0 ">
+                    <p className=" text-black">{message}</p>
+                    <footer className="blockquote-footer  ">{timestamp}</footer>
+                </blockquote>
+            </div>
+        </div>
 
+    )
+}
 PeepCard.propTypes = {
-    peep: PropTypes.shape({
-        name: PropTypes.string,
-        username: PropTypes.string,
-        message: PropTypes.string,
-        dateCreated: PropTypes.string
+    data: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+        message: PropTypes.string.isRequired,
+        timestamp: PropTypes.string
     }).isRequired
 };
 

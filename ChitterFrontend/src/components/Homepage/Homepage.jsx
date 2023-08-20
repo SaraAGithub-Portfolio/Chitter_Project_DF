@@ -1,17 +1,21 @@
 import PropTypes from 'prop-types';
 import PeepList from "./Peeps/PeepList";
+import AddPeep from './Peeps/AddPeep';
 
-const Homepage = ({ peep }) => {
+const Homepage = props => {
+    const { data, addPeep, user } = props
     return (
-        <div className="container mt-5">
-            <h1 className="text-center mb-4">Peep Feed</h1>
-            <PeepList peep={peep} />
-        </div>
-    );
-};
-
+        <>
+            <AddPeep addPeep={addPeep} user={user} />
+            <PeepList dataObj={data} />
+        </>
+    )
+}
 Homepage.propTypes = {
-    peep: PropTypes.array,
+    data: PropTypes.array.isRequired,
+    addPeep: PropTypes.func,
+    user: PropTypes.object,
 };
 
-export default Homepage;
+
+export default Homepage

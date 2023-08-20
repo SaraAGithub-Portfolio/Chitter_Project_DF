@@ -1,25 +1,28 @@
 import axios from 'axios'
 
-export const getPeepsData = async () => {
+export const getPeepDataAsync = async () => {
     try {
-        const response = await axios.get(`http://localhost:4000/peeps`);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching peeps data', error);
-        return [];
+        const responseData = await axios.get(`http://localhost:4000/peeps`);
+        return responseData;
     }
+    catch (e) {
+        return { error: `Error` };
+    }
+
 }
-export const addPeepData = async peep => {
-    console.log("Peep being sent:", peep);
+export const sendPeepDataAsync = async (peep) => {
+
     try {
-        const response = await axios.post(`http://localhost:4000/peeps`, peep);
-        return { peep: response.data, status: response.status };
-    } catch (error) {
+        const responseData = await axios.post(`http://localhost:4000/peeps`, peep);
+        return responseData.data;
+
+    }
+    catch (e) {
         return {
-            status: error.response?.status ?? error.status,
+            status: e.response?.status,
             error: {
-                type: 'post',
-                message: error.response?.message ?? error.message
+                type: `post`,
+                message: e.response?.message
             }
         };
     }

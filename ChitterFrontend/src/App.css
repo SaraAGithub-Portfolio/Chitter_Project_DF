@@ -1,13 +1,25 @@
-* {
+body,
+html {
   margin: 0;
   padding: 0;
-
+  font-family: 'Segoe UI', 'Times New Roman', Times, serif;
+  background: linear-gradient(to right, #8ed1d4, #56b1bf);
 }
 
-.Homepage {
-  font-family: 'Segoe UI', 'Times New Roman', Times, serif;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  background: #171717;
-  color: white;
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: auto;
+}
+
+
+
+@media screen and (max-width: 767px) {
+  header {
+    flex-direction: column;
+  }
 }

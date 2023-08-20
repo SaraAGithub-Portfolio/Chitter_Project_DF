@@ -1,125 +1,109 @@
+import './App.css';
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import AddPeep from './components/Homepage/Peeps/AddPeep';
 import Header from './components/Homepage/Header';
+import Footer from './components/Homepage/Footer';
 import Homepage from './components/Homepage/Homepage';
 import Login from './components/Homepage/Login/login';
 import Signup from './components/Homepage/Signup/signup';
-import { getPeepsData, addPeepData } from '../util/peepAPICall.js';
-import { addUser } from '../util/userAPICall.js'
-import { checkLogin } from '../util/authenticationHelper.js';
+import { getPeepDataAsync, sendPeepDataAsync } from '../util/peepAPICall.js';
+import { checkLoginAsync, addUserAsync, logOut, getCurrentUser } from '../util/userAPICall';
 
 
 function App() {
-  const [peepData, setPeepData] = useState([]);
-  const [user, setUser] = useState({});
-  const [error, setError] = useState({}) // Comment this if you're not using it yet
-
-  const getPeeps = async () => {
-    const peep = await getPeepsData();
-
-    if (peep?.error) {
-      setError(peep);
-      setPeepData([]);
-    } else {
-      setPeepData(peep);
-      setError({});
-    }
-  };
-
+  const [data, setData] = useState([]);
+  const [error, setError] = useState({});
+  const [user, setUser] = useState(undefined)
 
   const addPeep = async (peep) => {
-    const result = await addPeepData(peep);
-
+    const result = await sendPeepDataAsync(peep);
     if (result?.error) {
       setError(result);
-      return "Could not peep. Try again";
+      return "Peep could not be added";
+    }
+    setData([...data, result]);
+    setError({});
+  }
+
+  const addUser = async (userDetails) => {
+    const result = await addUserAsync(userDetails);
+    if (result?.error) {
+      setError(result);
+      return "Signup failed";
+    }
+    setError({});
+    return "Signup sucessful"
+  }
+
+  const checkLogin = async (loginDetails) => {
+    const result = await checkLoginAsync(loginDetails);
+    if (result?.error) {
+      setError(result);
+      return "User information incorrect";
+    }
+    setUser(result);
+    setError({});
+  }
+
+  const getPeepData = async () => {
+    const dataResult = await getPeepDataAsync();
+    console.log("Data Result:", dataResult);
+
+    if (dataResult?.error) {
+      setError(dataResult);
+      setData([]);
     } else {
-      setPeepData(prev => [...prev, result]);
+      setData(dataResult.data);
       setError({});
     }
   }
 
-  const handleLogin = async (loginDetails) => {
-    try {
-      console.log("Login details received:", loginDetails);
-      const loggedInUser = await checkLogin(loginDetails);
-      console.log("Logged In User:", loggedInUser);
-
-      if (loggedInUser?.error) {
-        setError(loggedInUser);
-        return "Login failed!";
-      }
-
-      setUser(loggedInUser);
-      console.log("User set in App state:", user);
-
-      return "Login successful!";
-    } catch (err) {
-      console.error("Error during login:", err);
-      setError({
-        message: "An error occurred during login."
-      });
-      return "Login failed!";
-    }
-  };
-
-  const newUser = async (userDetails) => {
-    try {
-      const result = await addUser(userDetails);
-
-      if (result?.errors) {
-        setError(result);
-        return result.errors;
-      } else if (result?.error) {
-        setError(result);
-        return "Signup failed!";
-      }
-
-      setUser(result);
-      return "Signup successful!";
-    } catch (err) {
-      setError({
-        message: "An error occurred during signup."
-      });
-      return "Signup failed!";
-    }
-  };
 
   const logOutUser = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-  };
+    logOut()
+    setUser(undefined)
+  }
 
   useEffect(() => {
-    getPeeps();
-    const getCurrentUser = () => {
-      return JSON.parse(localStorage.getItem("user"));
-    };
+    getPeepData();
     const user = getCurrentUser();
     if (user) {
-      setUser(user);
+      setUser(user)
     }
-  }, []);
-
-
+  }, [])
 
   return (
     <>
+      <div id="app" className="container-fluid ">
 
-      <Header user={user} logOutUser={logOutUser} />
-      <Routes>
-        <Route
-          path="/auth/login"
-          element={user && user._id ? <Homepage user={user} setUser={setUser} peep={peepData} /> : <Login handleLogin={handleLogin} setUser={setUser} />}
-        />
-        <Route path="/auth/signup" element={<Signup newUser={newUser} />} />
-        <Route path="/post" element={<AddPeep addPeep={addPeep} user={user} />} />
-        <Route path="/" element={<Homepage user={user} setUser={setUser} peep={peepData} />} />
-      </Routes>
+        <Header logOutUser={logOutUser} />
+        <div className="container-fluid ">
+          <Routes>
+            <Route path="/" element={
+              (!error || Object.keys(error).length === 0) ? <Homepage data={data} user={user} addPeep={addPeep} />
+                : <><p>Error: Data cannot be found</p></>
+            } />
+            <Route path="/auth/login" element={
+              (!error || Object.keys(error).length === 0) ? <Login checkLogin={checkLogin} />
+                : <><p>Try again. Wrong information</p></>
+            } />
+            <Route path="/auth/signup" element={
+              (!error || Object.keys(error).length === 0) ? <Signup newUser={addUser} />
+                : <><p>Try again</p></>
+            } />
+          </Routes>
+        </div>
+        <Footer />
 
+      </div>
     </>
   );
 }
 
 export default App;
+
+
+
+
+
+

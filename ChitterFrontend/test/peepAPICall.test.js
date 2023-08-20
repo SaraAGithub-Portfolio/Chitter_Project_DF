@@ -1,33 +1,40 @@
 import axios from 'axios';
 import { describe, test, expect } from 'vitest';
-import { getPeepsData, addPeepData } from '../util/peepAPICall.js';
-import mockData from '../mockPeepData.json';
+import { getPeepDataAsync, sendPeepDataAsync } from '../util/peepAPICall.js';
+import mockData from './mockData.json'
 import { vi } from 'vitest';
 
 vi.mock('axios');
 
 describe('Peep Call Tests', () => {
     test('should make an external call', async () => {
-        axios.get.mockResolvedValueOnce({ data: mockData });
-        const data = await getPeepsData();
+        const nestedMockData = {
+            data: {
+                data: mockData.data
+            }
+        };
 
-        expect(axios.get).toHaveBeenCalledWith(`${import.meta.env.VITE_API_ENDPOINT}/peeps`);
-        expect(data).toEqual(mockData);
+        axios.get.mockResolvedValueOnce(nestedMockData);
+        const data = await getPeepDataAsync();
+
+        expect(axios.get).toHaveBeenCalledWith(`http://localhost:4000/peeps`);
+        expect(data).toEqual(nestedMockData);
     });
-    test('should post a peep with addPeepData', async () => {
+    test('should post a peep with sendPeepDataAsync', async () => {
         axios.post.mockResolvedValueOnce({ data: mockData });
         const mockNewPeep = {
             message: "This is a peep test",
         };
-        const response = await addPeepData(mockNewPeep);
+        const response = await sendPeepDataAsync(mockNewPeep);
 
-        expect(axios.post).toHaveBeenCalledWith(`${import.meta.env.VITE_API_ENDPOINT}/peeps`, mockNewPeep);
+        expect(axios.post).toHaveBeenCalledWith(`http://localhost:4000/peeps`, mockNewPeep);
         expect(response).toEqual(mockData);
     });
-    test('should return an error if getPeepsData not returned', async () => {
+    test('should return an error if getPeepsDataAsync not returned', async () => {
         const error = { error: 'Error' };
         axios.get.mockRejectedValueOnce(error)
-        const result = await getPeepsData([]);
-        expect(result).toEqual([]);
+        const result = await getPeepDataAsync([]);
+        expect(result).toEqual({ error: 'Error' });
+
     })
 });
