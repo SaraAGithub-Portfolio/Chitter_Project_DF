@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import session from 'express-session'
+
 
 import { authRoute } from './src/routes/auth.js';
 import { peepsRoute } from './src/routes/peeps.js';
@@ -30,7 +30,7 @@ main().catch(err => console.log(err))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-// app.use(session({ secret: "key", resave: false, saveUninitialized: false }));
+
 
 app.use('/auth', authRoute);
 app.use('/peeps', peepsRoute);
