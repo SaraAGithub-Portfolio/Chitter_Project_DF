@@ -81,11 +81,11 @@ function App() {
           <Routes>
             <Route path="/" element={
               (!error || Object.keys(error).length === 0) ? <Homepage data={data} user={user} addPeep={addPeep} />
-                : <><p>Error: Data cannot be found</p></>
+                : <><p>Error: Peeps cannot be found</p></>
             } />
             <Route path="/auth/login" element={
               (!error || Object.keys(error).length === 0) ? <Login checkLogin={checkLogin} />
-                : <><p>Try again. Wrong information</p></>
+                : <><p>There was an issue. Try again. If making an account, create a unique account</p></>
             } />
             <Route path="/auth/signup" element={
               (!error || Object.keys(error).length === 0) ? <Signup newUser={addUser} />

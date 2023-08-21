@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { describe, test, expect, beforeEach } from 'vitest';
+import { beforeAll, describe, test, expect, beforeEach } from 'vitest';
 import { addUserAsync, checkLoginAsync, getCurrentUser, logOut } from '../util/userAPICall.js';
 import { vi } from 'vitest';
 
@@ -60,6 +60,10 @@ describe('User Call Tests', () => {
         describe('Logout tests', () => {
             const mockUser = { username: "testUsername" };
 
+            beforeAll(() => {
+                window.alert = vi.fn();
+            });
+
             test('should log out user successfully', async () => {
                 const mockResponse = { success: true, message: "Logged out successfully" };
                 axios.post.mockResolvedValueOnce({ data: mockResponse });
@@ -67,6 +71,7 @@ describe('User Call Tests', () => {
                 logOut(mockUser);
 
                 expect(localStorage.getItem('user')).toBeNull();
+                expect(window.alert).toHaveBeenCalledWith("Log out successful");
             });
 
             describe('getCurrent user tests', () => {

@@ -6,7 +6,7 @@ import AddPeep from '../src/components/Homepage/Peeps/AddPeep';
 
 describe('Add Peep Component Tests', () => {
     const mockUser = { name: "Eleven Hopper", username: "ElevenisCool" };
-    const mockPeep = { message: "Friend's don't lie" };
+    const mockAddPeepFunction = vi.fn();
 
     test('should render a login prompt when the user is not logged in if they want to peep', async () => {
 
@@ -14,7 +14,7 @@ describe('Add Peep Component Tests', () => {
 
         await render(
             <MemoryRouter>
-                <AddPeep addPeep={mockPeep} user={mockUser} />
+                <AddPeep addPeep={mockAddPeepFunction} user={mockUser} />
             </MemoryRouter>
         );
 
@@ -28,7 +28,7 @@ describe('Add Peep Component Tests', () => {
 
             render(
                 <MemoryRouter>
-                    <AddPeep addPeep={vi.fn()} user={mockUser} />
+                    <AddPeep addPeep={mockAddPeepFunction} user={mockUser} />
                 </MemoryRouter>
             );
         });

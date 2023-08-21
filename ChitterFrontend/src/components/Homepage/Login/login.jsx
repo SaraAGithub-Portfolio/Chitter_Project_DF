@@ -16,7 +16,6 @@ const Login = props => {
             "password": password
         }
         const login = await checkLogin(loginDetails);
-        console.log("Login Response:", login);
         setUsername('');
         setPassword('');
         if (localStorage.getItem("user")) {

@@ -40,6 +40,7 @@ const Signup = props => {
                                 className="form-control form-control-xxxl "
                                 id="name"
                                 aria-describedby="name"
+                                placeholder="first & last name "
                                 value={name}
                                 onChange={event => setName(event.target.value)} />
                         </div>
@@ -50,6 +51,7 @@ const Signup = props => {
                                 className="form-control form-control-xxxxl "
                                 id="email"
                                 aria-describedby="email"
+                                placeholder="@mail.com"
                                 value={email}
                                 onChange={event => setEmail(event.target.value)} />
                         </div>
